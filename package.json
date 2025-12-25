@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "build:css": "tailwindcss -i ./styles/globals.css -o ./styles/output.css --minify"
   },
   "dependencies": {
     "next": "16.1.1",
