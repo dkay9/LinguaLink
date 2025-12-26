@@ -10,26 +10,50 @@ export default function AppPage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [mode, setMode] = useState<Mode>("translate");
   const [language, setLanguage] = useState("French");
+  const [loading, setLoading] = useState(false);
 
   async function sendMessage(text: string) {
-    setMessages((m) => [...m, { role: "user", content: text }]);
-
-    const res = await fetch("/api/chat", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        message: text,
-        mode,
-        targetLang: language,
-      }),
-    });
-
-    const data: { output: string } = await res.json();
-
     setMessages((m) => [
       ...m,
-      { role: "assistant", content: data.output },
+      { role: "user", content: text },
+      { role: "assistant", content: "Thinking..." },
     ]);
+
+    setLoading(true);
+
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: text,
+          mode,
+          targetLang: language,
+        }),
+      });
+
+      const data: { output: string } = await res.json();
+
+      setMessages((m) => {
+        const copy = [...m];
+        copy[copy.length - 1] = {
+          role: "assistant",
+          content: data.output,
+        };
+        return copy;
+      });
+    } catch {
+      setMessages((m) => {
+        const copy = [...m];
+        copy[copy.length - 1] = {
+          role: "assistant",
+          content: "⚠️ Something went wrong. Try again.",
+        };
+        return copy;
+      });
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -48,7 +72,7 @@ export default function AppPage() {
           ))}
         </div>
 
-        <ChatBox onSend={sendMessage} />
+        <ChatBox onSend={sendMessage} disabled={loading} />
       </div>
     </div>
   );

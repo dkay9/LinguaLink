@@ -3,9 +3,10 @@ import { useState } from "react";
 
 type ChatBoxProps = {
   onSend: (text: string) => void;
+  disabled?: boolean;
 };
 
-export default function ChatBox({ onSend }: ChatBoxProps) {
+export default function ChatBox({ onSend, disabled }: ChatBoxProps) {
   const [text, setText] = useState("");
 
   function submit() {
@@ -21,10 +22,12 @@ export default function ChatBox({ onSend }: ChatBoxProps) {
         placeholder="Type in any language..."
         value={text}
         onChange={(e) => setText(e.target.value)}
+        disabled={disabled}
       />
       <button
         onClick={submit}
         className="px-4 bg-blue-600 text-white rounded-lg"
+        disabled={disabled}
       >
         Send
       </button>
