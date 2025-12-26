@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import ChatBox from "@/components/ChatBox";
 import ChatMessage from "@/components/ChatMessage";
 import ModeSelect from "@/components/ModeSelect";
@@ -11,6 +11,12 @@ export default function AppPage() {
   const [mode, setMode] = useState<Mode>("translate");
   const [language, setLanguage] = useState("French");
   const [loading, setLoading] = useState(false);
+
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   async function sendMessage(text: string) {
     setMessages((m) => [
@@ -47,7 +53,7 @@ export default function AppPage() {
         const copy = [...m];
         copy[copy.length - 1] = {
           role: "assistant",
-          content: "⚠️ Something went wrong. Try again.",
+          content: "Something went wrong. Try again.",
         };
         return copy;
       });
@@ -70,6 +76,7 @@ export default function AppPage() {
           {messages.map((m, i) => (
             <ChatMessage key={i} {...m} />
           ))}
+          <div ref={messagesEndRef} />
         </div>
 
         <ChatBox onSend={sendMessage} disabled={loading} />
