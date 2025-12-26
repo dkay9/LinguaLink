@@ -4,9 +4,12 @@ import { ChatRole } from "@/lib/types";
 type ChatMessageProps = {
   role: ChatRole;
   content: string;
+  status?: "thinking" | "done";
 };
 
 export default function ChatMessage({ role, content }: ChatMessageProps) {
+  const isThinking = role === "assistant" && content === "Thinking...";
+
   return (
     <div
       className={`p-3 rounded-lg max-w-[80%] whitespace-pre-wrap ${
@@ -15,7 +18,11 @@ export default function ChatMessage({ role, content }: ChatMessageProps) {
           : "bg-white/10 self-start"
       }`}
     >
-      {content}
+      {isThinking ? (
+        <span className="animate-pulse text-zinc-400">Thinking…</span>
+      ) : (
+        content
+      )}
     </div>
   );
 }

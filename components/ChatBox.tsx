@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, KeyboardEvent } from "react";
 
 type ChatBoxProps = {
   onSend: (text: string) => void;
@@ -15,6 +15,13 @@ export default function ChatBox({ onSend, disabled }: ChatBoxProps) {
     setText("");
   }
 
+  function handleKeyDown(e: KeyboardEvent<HTMLTextAreaElement>) {
+    if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        submit();
+    }
+  }
+
   return (
     <div className="flex gap-2">
       <textarea
@@ -22,6 +29,7 @@ export default function ChatBox({ onSend, disabled }: ChatBoxProps) {
         placeholder="Type in any language..."
         value={text}
         onChange={(e) => setText(e.target.value)}
+        onKeyDown={handleKeyDown}
         disabled={disabled}
       />
       <button
