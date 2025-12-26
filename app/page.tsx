@@ -34,7 +34,7 @@ export default function LandingPage() {
         {/* CTA */}
         <div className="pt-6">
           <Link
-            href="/app"
+            href="/chat"
             className="inline-block px-8 py-4 rounded-xl bg-white text-black font-semibold text-lg hover:bg-zinc-200 transition"
           >
             Start Using LinguaLink
