@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { Mic } from "lucide-react";
 
 type VoiceInputProps = {
   onSend: (text: string) => void;
@@ -45,24 +46,19 @@ export default function VoiceInput({
     <button
       onClick={handleVoice}
       disabled={disabled}
-      className={`
-        relative px-4 py-2 rounded-lg text-white transition
-        ${disabled ? "opacity-40 cursor-not-allowed" : ""}
-        ${listening ? "bg-red-600" : "bg-green-600"}
-      `}
+      className={`relative p-2 rounded-full border border-white/15
+        ${listening ? "text-red-400" : "text-zinc-300"}
+        hover:text-white transition disabled:opacity-40`}
     >
       {listening && (
-        <span className="absolute inset-0 rounded-lg animate-ping bg-white/30" />
+        <span className="absolute inset-0 rounded-full animate-ping bg-red-500/30" />
       )}
-
-      <span className="relative z-10">
-        {listening ? "Listening…" : "🎤 Speak"}
-      </span>
+      <Mic size={20} />
     </button>
   );
 }
 
-function mapLanguageToLocale(language?: string) {
+function mapLanguageToLocale(language?: string): string {
   switch (language) {
     case "French":
       return "fr-FR";
@@ -70,7 +66,14 @@ function mapLanguageToLocale(language?: string) {
       return "es-ES";
     case "German":
       return "de-DE";
+    case "Yoruba":
+      return "yo-NG";
+    case "Igbo":
+      return "ig-NG";
+    case "Hausa":
+      return "ha-NG";
     default:
       return "en-US";
   }
 }
+
