@@ -1,5 +1,6 @@
 "use client";
 import { useState, KeyboardEvent } from "react";
+import VoiceInput from "./VoiceInput";
 
 type ChatBoxProps = {
   onSend: (text: string) => void;
@@ -23,7 +24,7 @@ export default function ChatBox({ onSend, disabled }: ChatBoxProps) {
   }
 
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-2 items-end">
       <textarea
         className="flex-1 p-3 rounded-lg text-black"
         placeholder="Type in any language..."
@@ -32,6 +33,9 @@ export default function ChatBox({ onSend, disabled }: ChatBoxProps) {
         onKeyDown={handleKeyDown}
         disabled={disabled}
       />
+
+      <VoiceInput onSend={onSend} />
+
       <button
         onClick={submit}
         className="px-4 bg-blue-600 text-white rounded-lg"
