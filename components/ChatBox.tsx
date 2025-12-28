@@ -30,9 +30,9 @@ export default function ChatBox({
   }
 
   return (
-    <div className="flex items-end gap-2 rounded-2xl border border-white/15 bg-black/70 backdrop-blur px-3 py-2">
+    <div className="flex gap-2 items-end bg-black/40 backdrop-blur-lg border border-white/10 rounded-2xl p-3 shadow-[0_0_40px_rgba(0,255,255,0.08)]">
       <textarea
-        className="flex-1 resize-none bg-transparent text-white placeholder-zinc-400 outline-none py-2 max-h-32"
+        className="flex-1 bg-transparent text-white placeholder-zinc-400 resize-none outline-none"
         placeholder="Type in any language…"
         value={text}
         onChange={(e) => setText(e.target.value)}

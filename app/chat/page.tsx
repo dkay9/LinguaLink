@@ -63,7 +63,7 @@ export default function AppPage() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white p-6">
+    <div className="min-h-screen neon-bg text-white p-6">
       <div className="max-w-3xl mx-auto space-y-4">
         <h1 className="text-2xl font-bold">LinguaLink 🌍</h1>
 

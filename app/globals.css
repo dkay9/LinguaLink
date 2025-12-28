@@ -1,3 +1,32 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.neon-bg {
+  min-height: 100vh;
+  background:
+    radial-gradient(
+      600px at 20% 10%,
+      rgba(120, 80, 255, 0.15),
+      transparent 40%
+    ),
+    radial-gradient(
+      500px at 80% 20%,
+      rgba(0, 200, 255, 0.12),
+      transparent 40%
+    ),
+    radial-gradient(
+      400px at 50% 90%,
+      rgba(255, 0, 200, 0.08),
+      transparent 45%
+    ),
+    #000;
+}
+@keyframes neonPulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.neon-pulse {
+  animation: neonPulse 6s ease-in-out infinite;
+}
