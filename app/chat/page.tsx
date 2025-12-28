@@ -63,24 +63,32 @@ export default function AppPage() {
   }
 
   return (
-    <div className="min-h-screen neon-bg text-white p-6">
-      <div className="max-w-3xl mx-auto space-y-4">
-        <h1 className="text-2xl font-bold">LinguaLink 🌍</h1>
+  <div className="min-h-screen neon-bg text-white flex flex-col">
+    <div className="max-w-3xl mx-auto w-full flex flex-col flex-1 px-6 pt-6">
+      {/* Header */}
+      <h1 className="text-2xl font-bold mb-4">LinguaLink</h1>
 
-        <div className="flex gap-2">
-          <LanguageSelect value={language} onChange={setLanguage} />
-          <ModeSelect value={mode} onChange={setMode} />
-        </div>
+      {/* Controls */}
+      <div className="flex gap-2 mb-4">
+        <LanguageSelect value={language} onChange={setLanguage} />
+        <ModeSelect value={mode} onChange={setMode} />
+      </div>
 
-        <div className="flex flex-col gap-3 min-h-[400px]">
-          {messages.map((m, i) => (
-            <ChatMessage key={i} {...m} />
-          ))}
-          <div ref={messagesEndRef} />
-        </div>
+      {/* Messages (THIS must grow) */}
+      <div className="flex-1 overflow-y-auto flex flex-col gap-3 pb-32">
+        {messages.map((m, i) => (
+          <ChatMessage key={i} {...m} />
+        ))}
+        <div ref={messagesEndRef} />
+      </div>
+    </div>
 
+    {/* ChatBox pinned */}
+    <div className="sticky bottom-0 w-full px-4 pb-4">
+      <div className="max-w-3xl mx-auto">
         <ChatBox onSend={sendMessage} disabled={loading} />
       </div>
     </div>
-  );
+  </div>
+);
 }
