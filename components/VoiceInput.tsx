@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Mic } from "lucide-react";
+import VoiceWaveform from "./VoiceWaveform";
 
 type VoiceInputProps = {
   onSend: (text: string) => void;
@@ -16,20 +17,19 @@ export default function VoiceInput({
   const [listening, setListening] = useState(false);
 
   const handleVoice = () => {
-    if (disabled) return;
+    if (disabled || listening) return;
 
     const SpeechRecognitionConstructor =
       window.SpeechRecognition || window.webkitSpeechRecognition;
 
     if (!SpeechRecognitionConstructor) {
-      alert("Your browser does not support voice recognition.");
+      alert("Voice recognition not supported.");
       return;
     }
 
     const recognition = new SpeechRecognitionConstructor();
     recognition.lang = mapLanguageToLocale(language);
     recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
 
     recognition.onstart = () => setListening(true);
     recognition.onend = () => setListening(false);
@@ -46,14 +46,12 @@ export default function VoiceInput({
     <button
       onClick={handleVoice}
       disabled={disabled}
-      className={`relative p-2 rounded-full border border-white/15
-        ${listening ? "text-red-400" : "text-zinc-300"}
-        hover:text-white transition disabled:opacity-40`}
+      className="relative flex items-center gap-2 p-2 rounded-full
+                 border border-white/15
+                 text-zinc-300 hover:text-white
+                 transition disabled:opacity-40"
     >
-      {listening && (
-        <span className="absolute inset-0 rounded-full animate-ping bg-red-500/30" />
-      )}
-      <Mic size={20} />
+      {listening ? <VoiceWaveform /> : <Mic size={20} />}
     </button>
   );
 }
