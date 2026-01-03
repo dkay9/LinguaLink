@@ -6,17 +6,18 @@ if (!process.env.GROQ_API_KEY) {
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
-export async function generateAIResponse(prompt: string): Promise<string> {
-  try {
-    const completion = await groq.chat.completions.create({
-      model: "llama-3.1-8b-instant", 
-      messages: [{ role: "user", content: prompt }],
-      temperature: 0.5,
-    });
+export async function generateAIResponse(
+  systemPrompt: string,
+  userMessage: string
+) {
+  const completion = await groq.chat.completions.create({
+    model: "llama-3.1-8b-instant",
+    messages: [
+      { role: "system", content: systemPrompt },
+      { role: "user", content: userMessage },
+    ],
+  });
 
-    return completion.choices[0]?.message?.content ?? "No response.";
-  } catch (err) {
-    console.error("Groq API error:", err);
-    throw err; // rethrow so API route catches it
-  }
+  return completion.choices[0]?.message?.content ?? "No response.";
 }
+

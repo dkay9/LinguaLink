@@ -14,10 +14,10 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const prompt = getSystemPrompt(body.mode, body.targetLang);
+    const systemPrompt = getSystemPrompt(body.mode, body.targetLang);
 
     // Call AI client (Groq)
-    const output = await generateAIResponse(prompt);
+    const output = await generateAIResponse(systemPrompt, body.message);
 
     const resBody: ChatResponseBody = { output };
 
