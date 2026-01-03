@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { ChatRequestBody, ChatResponseBody } from "@/lib/types";
-import { buildPrompt } from "@/lib/prompts";
-import { generateAIResponse } from "@/lib/groq"; // your isolated AI client
+import { getSystemPrompt } from "@/lib/prompts";
+import { generateAIResponse } from "@/lib/groq"; 
 
 export async function POST(req: NextRequest) {
   try {
@@ -14,9 +14,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const prompt = buildPrompt(body.mode, body.message, body.targetLang);
+    const prompt = getSystemPrompt(body.mode, body.targetLang);
 
-    // Call AI client (Groq / Gemini)
+    // Call AI client (Groq)
     const output = await generateAIResponse(prompt);
 
     const resBody: ChatResponseBody = { output };

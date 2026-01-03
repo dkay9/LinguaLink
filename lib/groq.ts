@@ -9,7 +9,7 @@ const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 export async function generateAIResponse(prompt: string): Promise<string> {
   try {
     const completion = await groq.chat.completions.create({
-      model: "llama-3.1-8b-instant", // switched to supported model
+      model: "llama-3.1-8b-instant", 
       messages: [{ role: "user", content: prompt }],
       temperature: 0.5,
     });

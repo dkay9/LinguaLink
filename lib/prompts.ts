@@ -1,16 +1,20 @@
 import { Mode } from "./types";
 
-export function buildPrompt(mode: Mode, message: string, targetLang?: string) {
+export function getSystemPrompt(mode: Mode, language: string) {
   switch (mode) {
     case "translate":
-      return `Translate the following text into ${targetLang || "English"}:\n\n${message}`;
+      return `You are a professional translator. Translate ALL input into ${language}.`;
+
     case "explain":
-      return `Explain the following text in simple terms:\n\n${message}`;
+      return `You are a tutor. Explain concepts clearly in ${language}.`;
+
     case "correct":
-      return `Correct any grammatical mistakes in the following text:\n\n${message}`;
+      return `You are a language expert. Correct the text and respond ONLY in ${language}.`;
+
     case "lesson":
-      return `Create a short language lesson based on this text:\n\n${message}`;
+      return `You are a teacher. Create a structured lesson in ${language}.`;
+
     default:
-      return message;
+      return `Respond in ${language}.`;
   }
 }
